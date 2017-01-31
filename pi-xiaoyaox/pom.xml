@@ -1,13 +1,42 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.lappsgrid</groupId>
-  <artifactId>pi1-xiaoyaox</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <dependencies>
-  	<dependency>
-  		<groupId>org.lappsgrid</groupId>
-  		<artifactId>all</artifactId>
-  		<version>2.3.1</version>
-  	</dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- current project definition -->
+    <groupId>org.lappsgrid</groupId>
+    <artifactId>pi1-xiaoyaox</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Lappsgrid Service Example</name>
+    <description>Lapps Web Services wrapping example</description>
+    <!-- inheritance info -->
+    <parent>
+        <artifactId>war-parent-pom</artifactId>
+        <groupId>org.lappsgrid.maven</groupId>
+        <version>2.0.5</version>
+    </parent>
+    <!-- API dependency -->
+    <dependencies>
+        <dependency>
+            <groupId>org.lappsgrid</groupId>
+            <artifactId>all</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+    </dependencies>
+
+    <!-- compiler plugin for metadata annotation -->
+    <!-- which will not be used in current implementation -->
+    <build>
+        <finalName> YOUR_ARTIFACT_NAME </finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessors>
+                        <annotationProcessor>org.lappsgrid.annotation.processing.MetadataProcessor</annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

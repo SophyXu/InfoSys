@@ -11,10 +11,14 @@ import org.lappsgrid.serialization.lif.Container;
 import org.lappsgrid.serialization.lif.View;
 import org.lappsgrid.vocabulary.Features;
 
+// additional API for metadata
+import org.lappsgrid.metadata.IOSpecification;
+import org.lappsgrid.metadata.ServiceMetadata;
+
 import java.util.Map;
 
 /**
- * Tutorial step #2. Service Implementation 
+ * For tutorial step #3, writing getMetadata()
  */
 public class WhitespaceTokenizer implements ProcessingService
 {
@@ -25,12 +29,46 @@ public class WhitespaceTokenizer implements ProcessingService
 
 
     public WhitespaceTokenizer() {
-        
-        // Metadata will be discussed in step 3
-        this.metadata = null;
+
+        metadata = generateMetadata();
+
     }
 
-//    @Override
+    private String generateMetadata() {
+        // Create and populate the metadata object
+        ServiceMetadata metadata = new ServiceMetadata();
+
+        // Populate metadata using setX() methods
+        metadata.setName(this.getClass().getName());
+        metadata.setDescription("Whitespace tokenizer");
+        metadata.setVersion("1.0.0-SNAPSHOT");
+        metadata.setVendor("http://www.lappsgrid.org");
+        metadata.setLicense(Uri.APACHE2);
+
+        // JSON for input information
+        IOSpecification requires = new IOSpecification();
+        requires.addFormat(Uri.TEXT);           // Plain text (form)
+        requires.addFormat(Uri.LIF);            // LIF (form)
+        requires.addLanguage("en");             // Source language
+        requires.setEncoding("UTF-8");
+
+        // JSON for output information
+        IOSpecification produces = new IOSpecification();
+        produces.addFormat(Uri.LAPPS);          // LIF (form) synonymous to LIF
+        produces.addAnnotation(Uri.TOKEN);      // Tokens (contents)
+        requires.addLanguage("en");             // Target language
+        produces.setEncoding("UTF-8");
+
+        // Embed I/O metadata JSON objects
+        metadata.setRequires(requires);
+        metadata.setProduces(produces);
+
+        // Serialize the metadata to a string and return
+        Data<ServiceMetadata> data = new Data<ServiceMetadata>(Uri.META, metadata);
+        return data.asPrettyJson();
+    }
+
+    @Override
     /**
      * getMetadata simply returns metadata populated in the constructor
      */
@@ -38,7 +76,7 @@ public class WhitespaceTokenizer implements ProcessingService
         return metadata;
     }
 
-//    @Override2
+    @Override
     public String execute(String input) {
         // Step #1: Parse the input.
         Data data = Serializer.parse(input, Data.class);
