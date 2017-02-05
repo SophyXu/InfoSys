@@ -9,7 +9,7 @@ import org.lappsgrid.serialization.Serializer;
 import org.lappsgrid.serialization.lif.Annotation;
 import org.lappsgrid.serialization.lif.Container;
 import org.lappsgrid.serialization.lif.View;
-import org.lappsgrid.vocabulary.Features;
+import org.lappsgrid.vocabulary.Features;import ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy;
 
 // additional API for metadata
 import org.lappsgrid.metadata.IOSpecification;
